@@ -1,0 +1,114 @@
+plugins {
+    id 'com.android.application'
+    id 'org.jetbrains.kotlin.android'
+}
+
+android {
+    namespace 'org.mf.irregularscheduler'
+
+    signingConfigs {
+        release {
+        }
+    }
+    compileSdk 33
+
+
+    defaultConfig {
+        applicationId "org.mf.irregularscheduler"
+        minSdkVersion 31
+        targetSdkVersion 33
+        //versionCode 2
+        //versionName "2.0"
+
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
+        signingConfig signingConfigs.release
+
+        def versionPropsFile = file('version.properties')
+        def value = 0
+
+        Properties versionProps = new Properties()
+        if (!versionPropsFile.exists()) {
+            versionProps['VERSION_PATCH'] = "1"
+            versionProps['VERSION_NUMBER'] = "1"
+            versionProps['VERSION_BUILD'] = "-1"
+            versionProps.store(versionPropsFile.newWriter(), null)
+        }
+
+        def runTasks = gradle.startParameter.taskNames
+        if (':app:bundleRelease' in runTasks) {
+            value = 1
+        }
+
+        println("TEST  " + runTasks)
+        if (versionPropsFile.canRead()) {
+            versionProps.load(new FileInputStream(versionPropsFile))
+
+            versionProps['VERSION_NUMBER'] = (versionProps['VERSION_NUMBER'].toInteger()).toString()
+            versionProps['VERSION_PATCH'] = (versionProps['VERSION_PATCH'].toInteger() + value).toString()
+            versionProps['VERSION_BUILD'] = (versionProps['VERSION_BUILD'].toInteger() + 1).toString()
+            versionProps.store(versionPropsFile.newWriter(), null)
+
+            def mVersionName = "${versionProps['VERSION_NUMBER']}.${versionProps['VERSION_PATCH']}"
+            def mFileName = "IrregularScheduler-${mVersionName}.apk"
+
+            versionCode versionProps['VERSION_PATCH'].toInteger()
+            versionName "${mVersionName} Build: ${versionProps['VERSION_BUILD']}"
+
+        } else {
+            throw new FileNotFoundException("Could not read version.properties!")
+        }
+    }
+
+    packagingOptions {
+        resources {
+            excludes += ['META-INF/DEPENDENCIES']
+        }
+    }
+
+    bundle {
+        storeArchive {
+            enable = false
+        }
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android-optimize.txt'), 'proguard-rules.pro'
+        }
+    }
+    compileOptions {
+        sourceCompatibility JavaVersion.VERSION_1_8
+        targetCompatibility JavaVersion.VERSION_1_8
+    }
+    kotlinOptions {
+        jvmTarget = '1.8'
+    }
+    buildFeatures {
+        viewBinding true
+    }
+    buildToolsVersion '32.1.0 rc1'
+    dependenciesInfo {
+        includeInApk true
+    }
+}
+
+dependencies {
+    implementation ('com.google.apis:google-api-services-calendar:v3-rev20220401-1.32.1') {
+        exclude group: 'org.apache.httpcomponents'
+    }
+    implementation 'com.google.android.gms:play-services-auth:20.3.0'
+    implementation ('com.google.api-client:google-api-client-android:1.34.0')
+    implementation 'androidx.core:core-ktx:1.9.0'
+    implementation 'com.google.android.material:material:1.6.1'
+    implementation 'androidx.navigation:navigation-fragment-ktx:2.5.2'
+    implementation 'androidx.navigation:navigation-ui-ktx:2.5.2'
+    implementation 'androidx.preference:preference:1.2.0'
+    testImplementation 'junit:junit:4.13.2'
+    androidTestImplementation 'androidx.test.ext:junit:1.1.3'
+    androidTestImplementation 'androidx.test.espresso:espresso-core:3.4.0'
+    //implementation 'org.jetbrains.kotlinx:kotlinx-coroutines-android:1.6.1-native-mt'
+    //implementation 'androidx.appcompat:appcompat:1.5.1'
+    //implementation 'androidx.legacy:legacy-support-v4:1.0.0'
+
+}

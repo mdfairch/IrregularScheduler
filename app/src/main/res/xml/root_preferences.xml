@@ -1,0 +1,96 @@
+<!--
+  ~ Copyright 2022 Mark Fairchild.
+  ~
+  ~ Licensed under the Apache License, Version 2.0 (the "License");
+  ~ you may not use this file except in compliance with the License.
+  ~ You may obtain a copy of the License at
+  ~
+  ~     http://www.apache.org/licenses/LICENSE-2.0
+  ~
+  ~ Unless required by applicable law or agreed to in writing, software
+  ~ distributed under the License is distributed on an "AS IS" BASIS,
+  ~ WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+  ~ See the License for the specific language governing permissions and
+  ~ limitations under the License.
+  ~
+  -->
+
+<PreferenceScreen xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <PreferenceCategory app:title="@string/settings_main_header">
+
+        <Preference
+            app:key="@string/setting_selected_account"
+            app:title="@string/setting_selected_account_title"
+            app:icon="@drawable/common_google_signin_btn_icon_dark"
+            app:useSimpleSummaryProvider="false" />
+
+        <DropDownPreference
+            app:key="@string/setting_selected_calendar"
+            app:title="@string/setting_selected_calendar_title"
+            app:defaultValue="primary"
+            android:entries="@array/calendar_empty_entries"
+            android:entryValues="@array/calendar_empty_values"
+            app:icon="@android:drawable/ic_menu_month"
+            app:useSimpleSummaryProvider="true" />
+
+        <EditTextPreference
+            app:key="@string/setting_event_name"
+            app:title="@string/setting_event_name_title"
+            app:defaultValue="Work"
+            app:icon="@android:drawable/ic_menu_edit"
+            app:useSimpleSummaryProvider="true" />
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/settings_behaviour_header">
+
+        <DropDownPreference
+            app:key="@string/setting_default_duration"
+            app:defaultValue="8"
+            app:entries="@array/default_duration_entries"
+            app:entryValues="@array/default_duration_values"
+            app:title="@string/setting_default_duration_title"
+            app:icon="@android:drawable/ic_lock_idle_alarm"
+            />
+
+        <CheckBoxPreference
+            app:key="@string/setting_assume_daytime"
+            app:title="@string/setting_assume_daytime_title"
+            app:summary="@string/setting_assume_daytime_summary"
+            app:icon="@android:drawable/ic_menu_day"
+            app:defaultValue="true" />
+
+        <DropDownPreference
+            app:key="@string/setting_colour"
+            app:title="@string/setting_colour_title"
+            app:entries="@array/colorIds_entries"
+            app:entryValues="@array/colorIds_values"
+            app:icon="@android:drawable/ic_menu_gallery"
+            />
+
+        <!--
+            app:summary="@string/setting_default_duration_summary"
+            app:summary="@string/settings_colour_summary"
+        -->
+    </PreferenceCategory>
+
+    <PreferenceCategory app:title="@string/settings_optional_header">
+
+        <EditTextPreference
+            app:key="@string/setting_event_description"
+            app:title="@string/setting_event_description_title"
+            app:icon="@android:drawable/ic_menu_edit"
+            app:useSimpleSummaryProvider="true"
+            />
+
+        <EditTextPreference
+            app:key="@string/setting_address"
+            app:title="@string/setting_address_title"
+            app:icon="@android:drawable/ic_menu_mapmode"
+            app:useSimpleSummaryProvider="true"
+            />
+
+    </PreferenceCategory>
+
+</PreferenceScreen>
