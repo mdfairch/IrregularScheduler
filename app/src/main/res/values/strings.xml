@@ -25,7 +25,7 @@
 
     <string name="label_schedule_code">Enter schedule:</string>
     <string name="hello_second_fragment">Hello second fragment. Arg: %1$s</string>
-    <string name="schedule_code_hint">Example:\nm9-5 w15:30-940 r8am-8pm\nf10am su8-8</string>
+    <string name="schedule_code_hint">Example:\nm9&#8211;5 w15:30&#8211;940 r8am&#8211;8pm\nf10am su8&#8211;8</string>
     <string name="title_activity_settings">Settings</string>
 
     <!-- Preference Titles -->
@@ -82,5 +82,5 @@
     <string name="settings_colour_summary">The colour that will be used for the calendar events.\nCurrently: %s</string>
     <string name="errorMessage_notSignedIn">(not signed in)</string>
     <string name="defaultCalendarDisplay">(default)</string>
-    <string name="message_loadingPrivacy">Loading privacy policy...</string>
+    <string name="message_loadingPrivacy">Loading privacy policy&#8230;</string>
 </resources>
