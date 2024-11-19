@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Mark Fairchild.
+ * Copyright 2024 Mark Fairchild.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -22,15 +22,17 @@ import android.content.SharedPreferences
 import android.text.Html
 import android.text.Spanned
 import android.text.SpannedString
-import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.preference.PreferenceManager
-import java.time.*
+import java.time.DayOfWeek
+import java.time.LocalDate
+import java.time.LocalDateTime
+import java.time.LocalTime
+import java.time.ZoneId
 import java.time.format.DateTimeFormatter
 import java.time.format.FormatStyle
 import java.time.temporal.TemporalAdjusters
-import java.util.*
-import kotlin.collections.ArrayList
+import java.util.Date
 
 typealias Flagger = (r:IntRange, v:Boolean) -> Unit
 

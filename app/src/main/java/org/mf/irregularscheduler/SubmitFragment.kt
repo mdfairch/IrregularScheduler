@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Mark Fairchild.
+ * Copyright 2024 Mark Fairchild.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,28 +17,25 @@
 
 package org.mf.irregularscheduler
 
-import android.accounts.AccountManager
 import android.app.Activity
+import android.content.pm.PackageManager
 import android.os.Bundle
 import android.text.Html
+import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.activity.result.contract.ActivityResultContracts.StartActivityForResult
+import androidx.core.content.ContextCompat
 import androidx.core.text.HtmlCompat
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.fragment.app.viewModels
 import androidx.preference.PreferenceManager
+import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
 import org.mf.irregularscheduler.databinding.FragmentSubmitBinding
-import android.Manifest.*
-import android.content.pm.PackageManager
-import android.util.Log
-import androidx.core.content.ContextCompat
-import com.google.android.gms.auth.api.signin.GoogleSignIn
-import java.security.Permission
 
 
 /**

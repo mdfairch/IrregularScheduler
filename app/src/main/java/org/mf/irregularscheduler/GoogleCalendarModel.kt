@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Mark Fairchild.
+ * Copyright 2024 Mark Fairchild.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -17,7 +17,6 @@
 
 package org.mf.irregularscheduler
 
-import android.app.Application
 import android.content.Context
 import android.util.Log
 import androidx.preference.PreferenceManager
@@ -33,7 +32,7 @@ import com.google.api.services.calendar.model.CalendarListEntry
 import com.google.api.services.calendar.model.Event
 import com.google.api.services.calendar.model.EventDateTime
 import java.time.ZoneOffset
-import java.util.*
+import java.util.TimeZone
 
 
 class GoogleCalendarModel(

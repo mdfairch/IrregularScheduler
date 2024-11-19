@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Mark Fairchild.
+ * Copyright 2024 Mark Fairchild.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -19,24 +19,21 @@ package org.mf.irregularscheduler
 
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.pm.PackageManager
 import android.os.Bundle
-import android.text.Html
 import android.util.Log
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.core.content.ContextCompat
-import androidx.core.text.HtmlCompat
 import androidx.fragment.app.viewModels
-import androidx.preference.*
+import androidx.preference.DropDownPreference
+import androidx.preference.EditTextPreference
+import androidx.preference.Preference
 import androidx.preference.Preference.OnPreferenceChangeListener
 import androidx.preference.Preference.OnPreferenceClickListener
+import androidx.preference.PreferenceFragmentCompat
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.common.api.ApiException
 import com.google.api.client.googleapis.extensions.android.gms.auth.UserRecoverableAuthIOException
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.runBlocking
-import java.util.prefs.PreferenceChangeEvent
-import java.util.prefs.PreferenceChangeListener
 
 
 class SettingsFragment : PreferenceFragmentCompat()  {
@@ -77,7 +74,7 @@ class SettingsFragment : PreferenceFragmentCompat()  {
 
         val prefCalendar = findPreference<DropDownPreference>(getString(R.string.setting_selected_calendar))
         prefCalendar?.isEnabled = false
-        prefCalendar?.onPreferenceChangeListener = OnPreferenceChangeListener { preference, newValue ->
+        prefCalendar?.onPreferenceChangeListener = OnPreferenceChangeListener { _, newValue ->
                 Log.i("$tag.calendarChange", "Old value = ${prefCalendar?.value}, new value = $newValue, loaded = $calendarModelLoaded")
                 calendarModelLoaded
             }
@@ -113,24 +110,28 @@ class SettingsFragment : PreferenceFragmentCompat()  {
 
 
     private val accountChooserContract = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) {
-        if (it.resultCode == Activity.RESULT_OK) {
-            try {
-                Log.i("$tag.accountChooserContract", "RESULT_OK")
-                apiModel.handleSignIn(GoogleSignIn.getSignedInAccountFromIntent(it.data))
-            } catch (e : ApiException) {
-                Log.e("$tag.accountChooserContract", "$e.message")
-                apiModel.showErrorDialog(e.statusCode, this)
+        when (it.resultCode) {
+            Activity.RESULT_OK -> {
+                try {
+                    Log.i("$tag.accountChooserContract", "RESULT_OK")
+                    apiModel.handleSignIn(GoogleSignIn.getSignedInAccountFromIntent(it.data))
+                } catch (e : ApiException) {
+                    Log.e("$tag.accountChooserContract", "$e.message")
+                    apiModel.showErrorDialog(e.statusCode, this)
+                }
             }
-        } else if (it.resultCode == Activity.RESULT_CANCELED) {
-            try {
-                Log.i("$tag.accountChooserContract", "RESULT_CANCELED")
-                apiModel.handleSignIn(GoogleSignIn.getSignedInAccountFromIntent(it.data))
-            } catch (e : ApiException) {
-                Log.e("$tag.accountChooserContract", "$e.message")
-                apiModel.showErrorDialog(e.statusCode, this)
+            Activity.RESULT_CANCELED -> {
+                try {
+                    Log.i("$tag.accountChooserContract", "RESULT_CANCELED")
+                    apiModel.handleSignIn(GoogleSignIn.getSignedInAccountFromIntent(it.data))
+                } catch (e : ApiException) {
+                    Log.e("$tag.accountChooserContract", "$e.message")
+                    apiModel.showErrorDialog(e.statusCode, this)
+                }
             }
-        } else {
-            Log.i("$tag.accountChooserContract", it.toString())
+            else -> {
+                Log.i("$tag.accountChooserContract", it.toString())
+            }
         }
 
         Log.i("$tag.accountChooserContract", "Updating display.")

@@ -1,5 +1,5 @@
 /*
- * Copyright 2022 Mark Fairchild.
+ * Copyright 2024 Mark Fairchild.
  *
  * Licensed under the Apache License, Version 2.0 (the "License");
  * you may not use this file except in compliance with the License.
@@ -21,16 +21,15 @@ import android.Manifest
 import android.accounts.AccountManager
 import android.app.Application
 import android.content.Context
-import android.content.pm.PackageManager
 import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.util.Log
 import android.util.Patterns
-import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.AndroidViewModel
 import com.google.android.gms.auth.api.signin.GoogleSignIn
 import com.google.android.gms.auth.api.signin.GoogleSignInAccount
+import com.google.android.gms.auth.api.signin.GoogleSignInClient
 import com.google.android.gms.auth.api.signin.GoogleSignInOptions
 import com.google.android.gms.common.ConnectionResult
 import com.google.android.gms.common.GoogleApiAvailability
@@ -56,6 +55,7 @@ class GoogleApiViewModel(application: Application) : AndroidViewModel(applicatio
         .build() }
 
     private val googleSignIn by lazy { GoogleSignIn.getClient(application, googleSignInOptions) }
+
     fun silentSignIn(after : () -> Unit) {
         googleSignIn.silentSignIn().addOnCompleteListener {
             try {
